@@ -1,10 +1,10 @@
-**1.) Intial Labeling: begin with 20 randomly generated frames.**
+**1.) Intial Labeling**
 
-![Labeling Convention](1_labeling_conventions.png)
+Labeling was initalized by randomly generating 20 frames. For every randomly generated frame, each jelly was annotated such that 8 points (B1-B8), lie precisely on the circumference of the bell. The edges (connections between points) will not be factored in to tracked pulsation rates. C1 represents the center of the jelly's bell.
 
-For every randomly generated frame, each jelly was annotated such that 8 points (B1-B8), lie precisely on the circumference of the bell. The edges (connections between points) will not be factored in to tracked pulsation rates. C1 represents the center of the jelly's bell.
+![Labeled Sample](1_labeling_conventions.png)
 
-**2.) Model Training: train the model on unseen frames, and correct where necessary**
+**2.) Model Training**
 
 After annotating the first 20 randomly genreated frames, the model was trained on these frames, and predicted positions on a new set of 20 randomly generated frames. 
 
