@@ -1,4 +1,4 @@
-#part 1: nstall SLEAP and dependencies on HPC
+#part 1: Install SLEAP and dependencies on HPC
 
 conda create --prefix /path/to/your/sleap/env pip python=3.7.12 tensorflow==2.6.3 cudatoolkit=11.3 cudnn=8.2 -c conda-forge -c nvidia
 conda activate /path/to/your/sleap/env
