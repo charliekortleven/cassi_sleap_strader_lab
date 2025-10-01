@@ -2,18 +2,16 @@
 
 ![Labeling Convention](1_labeling_conventions.png)
 
-Labeled 8 points (B1-B8) on the circumference of the jelly's bell. Emphasis here was put on ensuring each point lie precisely on the circumference. The edges (connections between points) will not be factored in to tracked pulsation rates, and instead, were used as a proxy to equidistantly place B1-B8. C1 refers to the center of the jelly's bell.
+For every randomly generated frame, each jelly was annotated such that 8 points (B1-B8), lie precisely on the circumference of the bell. The edges (connections between points) will not be factored in to tracked pulsation rates. C1 represents the center of the jelly's bell.
 
 **2.) Model Training: train the model on unseen frames, and correct where necessary**
 
-Train on annotated frames -> predict on: random frames (20 total) -> wait for training to fully finish
+After annotating the first 20 randomly genreated frames, the model was trained on these frames, and predicted positions on a new set of 20 randomly generated frames. 
 
-Go -> Next Labeled Frame -> 'Score' (to view prediction confidence) -> Re-annotate predictions by right-clicking (when necessary)
+Each new frame predicted was manually examined (Go -> Next Labeled Frame -> 'Score'). Where necessary, poses were re-annotated.
 
-Continue this 'human-in-the-loop' correction until model can predict frames with high accuracy. 
+This cycle of training and predicting and updating ('human-in-the-loop') was continued until model could predict on unseen frames with confidence >90%. 
 
-This took me about 4 rounds of training to get predictions with instance scores consistently > 90%.
+**3.) Model Components** 
 
-**3.) Export model components** 
-
-The specific components of the model depend one which was selected for training. In this case, I used the 'multi-animal top-down' approach, which first finds each jelly (center instance, C1), and then estimates the pose of each found jelly (B1-B8 on the circumference). The resulting model came in two parts: (1) centered instance, (2) centroid. Both are required as inputs for downstream analysis. 
+The specific components of the model depend on which was selected for training. Here, we used the 'multi-animal top-down' approach, which first finds each jelly (center instance, C1), and then estimates the pose of each found jelly (B1-B8 on the circumference). The resulting model came in two parts: (1) centered instance, (2) centroid. Both are required as inputs for downstream inference.  
