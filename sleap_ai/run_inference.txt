@@ -1,0 +1,28 @@
+#part 1: nstall SLEAP and dependencies on HPC
+
+conda create --prefix /path/to/your/sleap/env pip python=3.7.12 tensorflow==2.6.3 cudatoolkit=11.3 cudnn=8.2 -c conda-forge -c nvidia
+conda activate /path/to/your/sleap/env
+pip install sleap[pypi]==1.4.1
+
+#part 2: run inference on videos
+
+source path/to/your/conda
+conda activate path/to/your/sleap/env
+
+     sleap-track /path/to/your/video \
+     --tracking.tracker simple \
+     --batch_size 4 \
+     --frames {see notes} \
+     -m /path/to/centered_instance/trained_model \
+     -m /path/to/centroid/trained_model \
+     -o /path/to/output/folder/name_of_video_frame_segment_1-648000.slp
+
+
+#specify --frames argument: to avoid reaching memory limitation, job timeout, etc.
+
+#part 3: convert .slp to .csv
+
+source path/to/your/conda
+conda activate path/to/your/sleap/env
+
+sleap-convert --format analysis.csv -o "/path/to/output/csv/{descriptive_name_for_output_CSV}.csv" "/path/to/output/folder/name_of_video.slp"
