@@ -1,0 +1,60 @@
+source activate base
+jupyter notebook
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.signal import find_peaks
+
+sampledata_jelly = pd.read_csv("C:\\Users\\Charlie Kortleven\\Desktop\\Cassi Footage\\pose_data\\jellyfeb02infer.001_SLEAP_sample1.analysis.csv")
+
+#investigate confidence scores across time
+
+plt.figure(figsize=(30, 6))
+jelly3 = sampledata_jelly[sampledata_jelly["track"] == "track_2"]
+plt.scatter(jelly3.index, jelly3["instance.score"])
+
+#quantifying activity threshold for bell pulsation
+
+
+bells = np.arange(1,9)
+bellradii= []
+for i in bells:
+    Bx = (jelly3[f"B{i}.x"])
+    By = (jelly3[f"B{i}.y"])
+    Cx = (jelly3["C1.x"])
+    Cy = (jelly3["C1.y"])
+    bellradius = np.sqrt((Bx - Cx)**2 + (By- Cy)**2)
+    bellradii.append(bellradius)
+
+#convert list to df
+dfbellradii = pd.DataFrame(bellradii)
+dfbellradii = dfbellradii.T
+dfbellradii.columns = ["bell1", "bell2", "bell3", "bell4", "bell5", "bell6", "bell7","bell8"]
+dfbellradii.index = jelly3["frame_idx"]
+
+#testing over the first 150 frames or first 10 seconds
+meanovertime = dfbellradii.mean(axis = 1)
+plt.plot(meanovertime.index[0:150], meanovertime.values[0:150])
+
+
+#rate of pulsations 
+
+
+#identify contractions (troughs)
+#adjust height to consider troughs greater than a particular depth
+
+inverted_data = -(meanovertime.values[start:stop])
+troughs, _ = find_peaks(inverted_data, height = -50)
+plt.plot(meanovertime.values[start:stop])
+plt.plot(troughs, (meanovertime.values[start:stop])[troughs], "x")
+
+#bell pulsations
+count_of_contractions = len(troughs)
+
+#normalize over FPS (as an example, FPS = 15)
+FPS = 15
+frame_count = stop - start
+normalized_frame_count = frame_count/FPS
+
+contractions_per_second = count_of_contractions/normalized_frame_count
