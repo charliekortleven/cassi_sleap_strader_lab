@@ -1,6 +1,6 @@
 1.) Intial Labeling: begin with 20 randomly generated frames.
 
-![Labeling Convention]("C:\Users\Charlie Kortleven\Desktop\Git\cassi_sleap_strader_lab\sleap_ai\labeling_conventions.png")
+![Labeling Convention]("C:\Users\Charlie Kortleven\Desktop\Git\cassi_sleap_strader_lab\sleap_ai\1_labeling_conventions.png")
 
 Labeled 8 points (B1-B8) on the circumference of the jelly's bell. Emphasis here was put on ensuring each point lie precisely on the circumference. The edges (connections between points) will not be factored in to tracked pulsation rates, and instead, were used as a proxy to equidistantly place B1-B8. C1 refers to the center of the jelly's bell.
 
